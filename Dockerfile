@@ -20,8 +20,8 @@
 # This runs the container with the settings as defined in the config file which is # made available to the container using the volume (-v) option. This volume is also
 # used as storage for persistent data created by the TURN server.
 
-FROM phusion/baseimage:0.9.19
-MAINTAINER Simon Eisenmann <simon@struktur.de>
+FROM phusion/baseimage:latest
+MAINTAINER Christian Günther <cguenther.tu.chemnitz@gmail.com>
 
 # Set locale.
 RUN locale-gen --no-purge en_US.UTF-8
@@ -34,7 +34,8 @@ CMD ["/sbin/my_init"]
 
 # Install coturn.
 RUN apt-get update && apt-get -y install \
-	coturn
+	coturn \
+	&& apt-get clean
 RUN mkdir /etc/service/coturn
 ADD coturn.sh /etc/service/coturn/run
 ADD coturn.logrotate /etc/logrotate.d/coturn
